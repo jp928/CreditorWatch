@@ -1,7 +1,7 @@
 ### RUN
 
 ```
-composer run
+composer run start
 ```
 ### TEST
 
