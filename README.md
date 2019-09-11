@@ -3,6 +3,14 @@
 ```
 composer run start
 ```
+
+OR run in docker via
+
+```
+docker-compose up -d
+```
+
+
 ### TEST
 
 ```

@@ -1,0 +1,28 @@
+version: "3.2"
+services:
+    php:
+      build:
+        context: ./docker/php
+        dockerfile: Dockerfile
+      container_name: PHP
+      working_dir: /var/www/html
+      ports:
+        - "9000:9000"
+      volumes:
+        - ./:/var/www/html
+
+    server:
+      build:
+        context: ./docker/nginx
+        dockerfile: Dockerfile
+      container_name: NGINX
+      working_dir: /var/www/html
+      volumes:
+        - ./:/var/www/html
+        - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/creditor-watch.conf
+      expose:
+        - "8180"
+      ports:
+        - "80:8180"
+      links:
+        - php

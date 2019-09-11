@@ -1,0 +1,22 @@
+# coverage
+.phpunit*
+coverage/
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+#System Files
+.DS_Store
+Thumbs.db
+
+#Ci/CD config
+.travis.yml
+
+#Readme
+README.md
