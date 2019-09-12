@@ -15,8 +15,8 @@ try {
     // bootstrap
     $app = require __DIR__ . '/../src/bootstrap.php';
 
-    // Run app
-    $app->run();
+    // Process logic
+    $app->process();
 } catch (\Exception $e) {
     die('Error occur: ' . $e->getMessage());
 }
