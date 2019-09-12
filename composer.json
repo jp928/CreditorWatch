@@ -22,7 +22,7 @@
             ],
             "pre-push": [
                 "composer cs",
-                "composer test"
+                "composer run test"
             ]
         }
     },
