@@ -14,15 +14,19 @@
             "App\\": "src/App"
         }
     },
+    "extra": {
+        "hooks": {
+            "pre-commit": [
+                "echo committing as $(git config user.name)",
+                "vendor/bin/phpcbf || true"
+            ],
+            "pre-push": [
+                "composer cs",
+                "composer test:unit"
+            ]
+        }
+    },
     "scripts": {
-        "pre-commit": [
-            "echo committing as $(git config user.name)",
-            "vendor/bin/phpcbf || true"
-        ],
-        "pre-push": [
-            "composer cs",
-            "composer test:unit"
-        ],
         "start": "php -S localhost:8080 -t public index.php",
         "test": "vendor/bin/phpunit --colors=always --fail-on-warning --fail-on-risky",
         "cs": "vendor/bin/phpcs ./src",
