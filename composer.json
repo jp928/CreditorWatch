@@ -21,7 +21,8 @@
                 "vendor/bin/phpcbf || true"
             ],
             "pre-push": [
-                "composer cs"
+                "composer cs",
+                "composer test"
             ]
         }
     },
