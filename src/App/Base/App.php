@@ -9,5 +9,4 @@ class App
     {
         echo 'hello world';
     }
-
 }
