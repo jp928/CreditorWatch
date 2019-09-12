@@ -1,13 +1,13 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace App\Base;
 
 class App
 {
-    public function run()
+
+    public function run(): void
     {
         echo 'hello world';
     }
+
 }
