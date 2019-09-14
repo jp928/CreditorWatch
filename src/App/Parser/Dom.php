@@ -114,7 +114,7 @@ class Dom
     /**
      * Get content from cache
      */
-    private function getContentFromCache(): ?string
+    protected function getContentFromCache(): ?string
     {
         $cacheDir = DOM::CACHE_DIR;
 
@@ -146,13 +146,13 @@ class Dom
      *
      * @param string html
      */
-    private function persistCache(string $content): void
+    protected function persistCache(string $content): void
     {
         $expireOn = new DateTime();
         
         $expireOn->modify('+10 hours');
 
-        $cacheFile =  DOM::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
+        $cacheFile = DOM::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
 
         file_put_contents($cacheFile, $content);
     }

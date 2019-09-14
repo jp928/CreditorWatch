@@ -75,7 +75,7 @@ class App
      *
      * @param string $keyword
      */
-    public function setUrl(string $keyword): void
+    private function setUrl(string $keyword): void
     {
         $this->url = 'http://www.google.com/search?q=' . rawurlencode($keyword) . '&start=0&num=100';
     }
