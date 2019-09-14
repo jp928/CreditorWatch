@@ -4,6 +4,6 @@ use App\Base\App;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-require_once __DIR__ . '/settings.php';
+$settings = require_once __DIR__ . '/settings.php';
 
-return new App();
+return new App($settings['keyword']);

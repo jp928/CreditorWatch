@@ -9,7 +9,7 @@ use function curl_init;
 use function curl_setopt;
 use function ini_get;
 
-class Curl implements DownloaderInterface
+class Downloader implements DownloaderInterface
 {
 
     /**
