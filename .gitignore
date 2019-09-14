@@ -17,6 +17,6 @@ Thumbs.db
 
 #Composer libraries and logs
 /vendor/
-/logs/*
+/logs/*.log
 
-/cache/*
+/cache/*.html
