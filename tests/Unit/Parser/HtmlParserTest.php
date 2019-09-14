@@ -1,9 +1,13 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
+namespace Tests\Unit\Parser;
+
 use App\Parser\HtmlParser;
+use PHPUnit\Framework\TestCase;
 
-class HtmlParserTest extends TestCase {
+class HtmlParserTest extends TestCase
+{
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -16,7 +20,7 @@ class HtmlParserTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testParse()
+    public function testParse(): void
     {
         $testDom = '<html><body><div>test<a><h3>CreditorWatch</h3></a></div><a><h3>creditor watch</h3></a></body></html>';
 

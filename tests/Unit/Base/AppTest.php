@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
+namespace Tests\Unit\Base;
+
 use App\Base\App;
 use App\Parser\Dom;
+use PHPUnit\Framework\TestCase;
 
-class AppTest extends TestCase {
+class AppTest extends TestCase
+{
 
     /** @var string $testKeyword */
     private $testKeyword = 'testKey Word';
@@ -24,7 +27,7 @@ class AppTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testProcess()
+    public function testProcess(): void
     {
         $mockedDom = $this->createMock(Dom::class);
       

@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
+namespace Tests\Unit\Parser;
+
 use App\Parser\Dom;
 use App\Parser\Downloader;
 use App\Parser\HtmlParser;
+use PHPUnit\Framework\TestCase;
 
-class DomTest extends TestCase {
+class DomTest extends TestCase
+{
 
     /** @var \App\Parser\Downloader */
     private $mockedDownloader;
@@ -19,12 +22,10 @@ class DomTest extends TestCase {
         $this->mockedDownloader = $this->createMock(Downloader::class);
         $this->mockedHtmlParser = $this->createMock(HtmlParser::class);
 
-        // $this->dom = new Dom($this->mockedDownloader, $this->mockedHtmlParser);
         $this->dom = $this->getMockBuilder(Dom::class)
             ->setConstructorArgs([$this->mockedDownloader, $this->mockedHtmlParser])
             ->setMethods(['persistCache', 'getContentFromCache'])
             ->getMock();
-
     }
 
     protected function tearDown(): void
@@ -35,7 +36,7 @@ class DomTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $testUrl = 'http://google.com/search=test';
         $testDom = '<html><body><div>test</div></body></html>';
@@ -55,7 +56,7 @@ class DomTest extends TestCase {
         $this->dom->load($testUrl);
     }
 
-    public function testParse()
+    public function testParse(): void
     {
         $testUrl = 'http://google.com/search=test';
         $testDom = '<html><head><scrip>var a = b;</script></head><body><div>test</div><script></script></body></html>';
