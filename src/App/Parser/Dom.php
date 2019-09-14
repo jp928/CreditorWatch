@@ -125,6 +125,10 @@ class Dom
                 return preg_match("/result_.*[0-9].*.html/", $file) > 0;
             });
 
+            if (empty($cacheFile)) {
+                return null;
+            }
+
             $cacheFileName = reset($cacheFile);
             $expiredAfter = (new DateTime())->setTimestamp((int) substr($cacheFileName, 7, -5));
             $now = new DateTime();

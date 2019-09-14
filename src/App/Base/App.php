@@ -20,17 +20,15 @@ class App
     public function __construct(string $keyword)
     {
         Assert::stringNotEmpty($keyword, 'Please set keyword in setting.php.');
+
         $this->keyword = $keyword;
-        $this->url = 'http://www.google.com/search?q=' . rawurlencode($keyword) . '&start=0&num=100&ie=utf-8&oe=utf-8';
+
+        $this->setUrl($keyword);
     }
 
     public function process(): void
     {
-        $downloader = new Downloader();
-
-        $parser = new HtmlParser();
-
-        $dom = new Dom($downloader, $parser);
+        $dom = $this->domFactory();
 
         $dom->load($this->url);
 
@@ -56,5 +54,29 @@ class App
         $template = str_replace(['%keyword%', '%content%'], compact('keyword', 'content'), $template);
 
         return $template;
+    }
+
+    /**
+     * Generate Dom Object
+     *
+     * @return /App/Parser/Dom
+     */
+    protected function domFactory(): Dom
+    {
+        $downloader = new Downloader();
+
+        $parser = new HtmlParser();
+
+        return new Dom($downloader, $parser);
+    }
+
+    /**
+     * Setter of $keyword
+     *
+     * @param string $keyword
+     */
+    public function setUrl(string $keyword): void
+    {
+        $this->url = 'http://www.google.com/search?q=' . rawurlencode($keyword) . '&start=0&num=100';
     }
 }
