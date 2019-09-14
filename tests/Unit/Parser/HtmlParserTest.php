@@ -22,7 +22,7 @@ class HtmlParserTest extends TestCase
 
     public function testParse(): void
     {
-        $testDom = '<html><body><div>test<a><h3>CreditorWatch</h3></a></div><a><h3>creditor watch</h3></a></body></html>';
+        $testDom = '<html><body><div>test<a><h3>CreditorWatch</h3></a></div><a><h3>creditor watch</h3></a><a><h3>swiss watch</h3></a></body></html>';
 
         $result = $this->parser->parse($testDom);
 

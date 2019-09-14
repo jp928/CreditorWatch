@@ -9,6 +9,9 @@ use function curl_init;
 use function curl_setopt;
 use function ini_get;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Downloader implements DownloaderInterface
 {
 
