@@ -113,6 +113,8 @@ class Dom
 
     /**
      * Get content from cache
+     *
+     * @codeCoverageIgnore
      */
     protected function getContentFromCache(): ?string
     {
@@ -125,7 +127,7 @@ class Dom
                 return preg_match("/result_.*[0-9].*.html/", $file) > 0;
             });
 
-            if (empty($cacheFile)) {
+            if (count($cacheFile) === 0) {
                 return null;
             }
 
@@ -144,6 +146,7 @@ class Dom
     /**
      * Persist content into a local file
      *
+     * @codeCoverageIgnore
      * @param string html
      */
     protected function persistCache(string $content): void
