@@ -27,7 +27,7 @@
         }
     },
     "scripts": {
-        "start": "php -S localhost:8080 -t public index.php",
+        "start": "php -S localhost:8080 -t public public/index.php",
         "test": "vendor/bin/phpunit --colors=always --fail-on-warning --fail-on-risky",
         "cs": "vendor/bin/phpcs ./src",
         "cbf": "vendor/bin/phpcbf -p ./src"

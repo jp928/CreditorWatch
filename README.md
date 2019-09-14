@@ -7,11 +7,15 @@
 composer run start
 ```
 
+then open localhost:8080 from any browser
+
 OR run in docker via
 
 ```
 docker-compose up -d
 ```
+
+then open localhost from any browser
 
 
 ### TEST
