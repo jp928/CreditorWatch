@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/jp928/CreditorWatch.svg?branch=master)](https://travis-ci.org/jp928/CreditorWatch)
-[![codecov](https://codecov.io/gh/TechnionYP5777/CreditorWatch/branch/master/graph/badge.svg)](https://codecov.io/gh/TechnionYP5777/CreditorWatch)
+[![codecov](https://codecov.io/gh/jp928/CreditorWatch/branch/master/graph/badge.svg)](https://codecov.io/gh/jp928/CreditorWatch)
 
 ### RUN
 
