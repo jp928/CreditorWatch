@@ -5,11 +5,7 @@ namespace App\Service;
 use App\Entity\CreditorWatchCollection;
 use App\Parser\HtmlParserInterface;
 use App\Transport\DownloaderInterface;
-use DateTime;
 use Webmozart\Assert\Assert;
-use function file_get_contents;
-use function is_array;
-use function preg_match;
 
 class GoogleSearchService
 {
@@ -104,16 +100,7 @@ class GoogleSearchService
      */
     protected function getContent(string $url): string
     {
-        $cache = $this->getContentFromCache();
-
-        if ($cache !== null) {
-            return $cache;
-        } else {
-            $content = $this->downloader->download($url);
-            $this->persistCache($content);
-        }
-
-        return $content;
+        return $this->downloader->download($url);
     }
 
     /**
@@ -121,32 +108,32 @@ class GoogleSearchService
      *
      * @codeCoverageIgnore
      */
-    protected function getContentFromCache(): ?string
-    {
-        $cacheDir = GoogleSearchService::CACHE_DIR;
+    // protected function getContentFromCache(): ?string
+    // {
+    //     $cacheDir = GoogleSearchService::CACHE_DIR;
 
-        $files = scandir($cacheDir);
+    //     $files = scandir($cacheDir);
 
-        if (is_array($files)) {
-            $cacheFile = array_filter($files, function ($file) {
-                return preg_match("/result_.*[0-9].*.html/", $file) > 0;
-            });
+    //     if (is_array($files)) {
+    //         $cacheFile = array_filter($files, function ($file) {
+    //             return preg_match("/result_.*[0-9].*.html/", $file) > 0;
+    //         });
 
-            if (count($cacheFile) === 0) {
-                return null;
-            }
+    //         if (count($cacheFile) === 0) {
+    //             return null;
+    //         }
 
-            $cacheFileName = reset($cacheFile);
-            $expiredAfter = (new DateTime())->setTimestamp((int) substr($cacheFileName, 7, -5));
-            $now = new DateTime();
+    //         $cacheFileName = reset($cacheFile);
+    //         $expiredAfter = (new DateTime())->setTimestamp((int) substr($cacheFileName, 7, -5));
+    //         $now = new DateTime();
 
-            if ($now <= $expiredAfter) {
-                return file_get_contents($cacheDir . DIRECTORY_SEPARATOR . $cacheFileName);
-            }
-        }
+    //         if ($now <= $expiredAfter) {
+    //             return file_get_contents($cacheDir . DIRECTORY_SEPARATOR . $cacheFileName);
+    //         }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     /**
      * Persist content into a local file
@@ -154,14 +141,14 @@ class GoogleSearchService
      * @codeCoverageIgnore
      * @param string html
      */
-    protected function persistCache(string $content): void
-    {
-        $expireOn = new DateTime();
+    // protected function persistCache(string $content): void
+    // {
+    //     $expireOn = new DateTime();
         
-        $expireOn->modify('+10 hours');
+    //     $expireOn->modify('+10 hours');
 
-        $cacheFile = GoogleSearchService::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
+    //     $cacheFile = GoogleSearchService::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
 
-        file_put_contents($cacheFile, $content);
-    }
+    //     file_put_contents($cacheFile, $content);
+    // }
 }

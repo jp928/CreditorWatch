@@ -2,7 +2,11 @@
 
 namespace App\Cache;
 
-class Cache implements CacheInterface
+use function is_string;
+use function serialize;
+use function unserialize;
+
+class Cache
 {
 
     /** @var \App\Cache\CacheInterface $cacheEngine */
@@ -13,8 +17,36 @@ class Cache implements CacheInterface
         $this->cacheEngine = $cacheEngine;
     }
 
-    public function obtain(): void
+    /**
+     * Fetch data from cache engine
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $key
+     * @return mixed|null
+     */
+    public function obtain(string $key)
     {
-        $this->cacheEngine->obtain();
+        $cache = $this->cacheEngine->obtain($key);
+
+        if (is_string($cache)) {
+            return unserialize($cache);
+        }
+
+        return null;
+    }
+
+    /**
+     * Persist data into cache engine
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $key
+     * @param mixed $data
+     * @return bool
+     */
+    public function persist(string $key, $data): bool
+    {
+        if (is_string($data) === false) {
+            $data = serialize($data);
+        }
+
+        return $this->cacheEngine->persist($key, $data);
     }
 }

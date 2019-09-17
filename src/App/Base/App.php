@@ -2,51 +2,37 @@
 
 namespace App\Base;
 
-use App\Container\Container;
-use App\Controller\GoogleSearchController;
+use App\Container\ContainerInterface;
 
 class App
 {
 
-    /** @var string[] $definition */
-    private $definition = [];
+    /** @var \App\Base\Router $router */
+    private $router;
+
+    /** @var \App\Base\Request */
+    private $request;
     
-    /**
-     * @param string[] $definition Dedependcies definition
-     */
-    public function __construct(array $definition)
+    public function __construct(ContainerInterface $container)
     {
-        $this->definition = $definition;
-
-        $this->router = new Router();
-
-        $googleSearchController = Container::getInstance()->setDefinition($definition)->resolve(GoogleSearchController::class);
-
-        $this->registerRoute($googleSearchController);
-    }
-    
-    protected function configureContainer(ContainerInterface $container): void
-    {
-        $container->wire($this->definition);
+        $this->router = $container->resolve(Router::class);
+        $this->request = $container->resolve(Request::class)->parseRequest();
+        $this->router->bindContainer($container)->registerControllers();
     }
 
     public function run(): void
     {
-        try {
-            $request = $_POST;
-            // var_dump($_POST);
-            // $request = $this->request->parse();
-            $response = $this->process($request, $response);
-        } catch (InvalidMethodException $e) {
-            // $response = $this->processInvalidMethod($e->getRequest(), $response);
-        } finally {
-        }
-
+        $response = $this->process();
         $this->render($response);
     }
 
     protected function render(ResponseInterface $response): void
     {
         echo $response;
+    }
+
+    public function process(): Response
+    {
+        return $this->router->dispatch($this->request);
     }
 }

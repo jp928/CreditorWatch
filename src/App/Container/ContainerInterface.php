@@ -10,11 +10,11 @@ namespace App\Container;
 interface ContainerInterface
 {
 
-    public function resolve(string $class): void;
     /**
-     * Wire definition
-     *
-     * @return void
+     * Resolve dependency
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $class
+     * @return mixed
      */
-    // public function wire(array $definition): void;
+    public function resolve(string $class);
 }

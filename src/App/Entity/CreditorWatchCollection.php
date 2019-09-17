@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use Iterator;
+use Serializable;
 
-class CreditorWatchCollection implements Iterator
+class CreditorWatchCollection implements Iterator, Serializable
 {
 
     /** @var int $position */
@@ -50,5 +51,20 @@ class CreditorWatchCollection implements Iterator
         $this->collection[] = $creditorWatch;
 
         $this->rewind();
+    }
+
+    public function size(): int
+    {
+        return count($this->collection);
+    }
+
+    public function serialize(): string
+    {
+        return serialize($this->collection);
+    }
+   
+    public function unserialize($data): void
+    {
+        $this->collection = unserialize($data);
     }
 }

@@ -51,8 +51,6 @@ class Container implements ContainerInterface
      */
     protected function lookUp(string $interface): string
     {
-        var_dump($this->definition);
-
         if (array_key_exists($interface, $this->definition)) {
             return $this->definition[$interface];
         }
@@ -66,13 +64,18 @@ class Container implements ContainerInterface
      * @param string $class
      * @return mixed
      */
-    public function resolve(string $class): mixed
+    public function resolve(string $class)
     {
         $reflectionClass = new ReflectionClass($class);
 
         if ($reflectionClass->isInterface()) {
             $class = $this->lookUp($class);
             $reflectionClass = new ReflectionClass($class);
+        }
+
+        // do not resolve abstract class yet
+        if ($reflectionClass->isAbstract()) {
+            return;
         }
 
         // Fetch the constructor

@@ -3,21 +3,51 @@
 namespace App\View;
 
 use App\Base\Response;
-use App\Entity\CreditorWatchCollection;
 use App\Exceptions\TemplateNotFoundException;
+use Iterator;
+use function implode;
 
 class View
 {
+
+    /** @var string[] $indices */
+    private $indices = [];
 
     public function __construct()
     {
         $this->loadTemplate();
     }
 
-    public function render(CreditorWatchCollection $collection): Response
+    public function render(?Iterator $collection = null): Response
     {
         $content = '';
+        $keyword = '';
 
+        if (!is_null($collection)) {
+            $content = $this->generateContent($collection);
+        }
+
+        if (count($this->indices) > 0) {
+            $keyword = implode(', ', $this->indices);
+        }
+
+        $html = str_replace(
+            ['%keyword%', '%content%'],
+            compact('keyword', 'content'),
+            $this->template
+        );
+        
+        $response = new Response();
+
+        $response->setBody($html);
+
+        return $response;
+    }
+
+    private function generateContent(Iterator $collection): string
+    {
+        $content = '';
+        
         $collection->rewind();
 
         while ($collection->valid()) {
@@ -26,29 +56,20 @@ class View
             $key = htmlspecialchars($creditorWatch->getKey());
             $value = htmlspecialchars($creditorWatch->getValue());
 
-            $content .= '<li>' . $key . '&nbsp;<b>' . $value . '</b></li>';
+            $this->indices[] = $key;
+            $content .= '<li class="list-group-item d-flex justify-content-between align-items-center">'
+                . $value . '<span class="badge badge-primary badge-pill">' . $key . '</span></li>';
 
             $collection->next();
         }
 
-        $html = str_replace(
-            ['%keyword%', '%content%'],
-            compact('keyword', 'content'),
-            $this->template,
-        );
-
-        $response = new Response();
-
-        $response->setBody($html);
-
-        return $response;
+        return $content;
     }
 
     private function loadTemplate(): void
     {
         $template = file_get_contents(__DIR__ . '/../Template/result.tpl');
 
-        // var_dump($template);
         if ($template === false) {
             throw new TemplateNotFoundException();
         }

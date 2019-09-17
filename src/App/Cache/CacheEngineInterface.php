@@ -12,15 +12,18 @@ interface CacheEngineInterface
 
     /**
      * Obtain result from cache
-     *
-     * @return void
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $key
+     * @return mixed
      */
-    public function obtain(string $key): void;
+    public function obtain(string $key);
 
     /**
      * Persist result to cache
-     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $key
+     * @param mixed $value
      * @return bool
      */
-    public function persist(): bool;
+    public function persist(string $key, $value): bool;
 }
