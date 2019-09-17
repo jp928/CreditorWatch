@@ -68,30 +68,25 @@ class Container implements ContainerInterface
      */
     public function resolve(string $class): mixed
     {
-        // Reflect on the $class
         $reflectionClass = new ReflectionClass($class);
 
         if ($reflectionClass->isInterface()) {
             $class = $this->lookUp($class);
             $reflectionClass = new ReflectionClass($class);
-          // var_dump($reflectionClass);die();
         }
 
-        // Fetch the constructor (instance of ReflectionMethod)
+        // Fetch the constructor
         $constructor = $reflectionClass->getConstructor();
 
-        // If there is no constructor, there is no
-        // dependencies, which means that our job is done.
+        // If there is no constructor, instantiate the class
         if (! $constructor) {
             return new $class();
         }
 
         // Fetch the arguments from the constructor
-        // (collection of ReflectionParameter instances)
         $params = $constructor->getParameters();
 
-        // If there is a constructor, but no dependencies,
-        // our job is done.
+        // If there is a constructor, but no dependencies intiatiate
         if (count($params) === 0) {
             return new $class();
         }
@@ -110,23 +105,12 @@ class Container implements ContainerInterface
                 continue;
             }
 
-            // var_dump($param->getClass()->getName());die();
-            // This is where 'the magic happens'. We resolve each
-            // of the dependencies, by recursively calling the
-            // resolve() method.
-            // At one point, we will reach the bottom of the
-            // nested dependencies we need in order to instantiate
-            // the class.
+            // recusively resolve dependencies
             $newInstanceParams[] = $this->resolve(
                 $param->getClass()->getName()
             );
         }
 
-        // Return the reflected class, instantiated with all its
-        // dependencies (this happens once for all the
-        // nested dependencies).
-        return $reflectionClass->newInstanceArgs(
-            $newInstanceParams,
-        );
+        return $reflectionClass->newInstanceArgs($newInstanceParams);
     }
 }
