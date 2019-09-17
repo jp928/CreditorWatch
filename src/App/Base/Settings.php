@@ -18,9 +18,6 @@ class Settings implements ArrayAccess
 
     public function &__get($key)
     {
-        var_dump($key);
-        die;
-
         return $this->settings[$key];
     }
 
