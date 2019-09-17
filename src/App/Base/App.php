@@ -20,6 +20,7 @@ class App
         $this->router->bindContainer($container)->registerControllers();
     }
 
+
     public function run(): void
     {
         $response = $this->process();
@@ -31,7 +32,7 @@ class App
         echo $response;
     }
 
-    public function process(): Response
+    private function process(): Response
     {
         return $this->router->dispatch($this->request);
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Parser;
 
+use App\Entity\CreditorWatch;
 use App\Parser\HtmlParser;
 use PHPUnit\Framework\TestCase;
 
@@ -26,6 +27,20 @@ class HtmlParserTest extends TestCase
 
         $result = $this->parser->parse($testDom);
 
-        $this->assertEquals(['CreditorWatch', 'creditor watch'], $result);
+        $this->assertEquals(2, $result->size());
+
+        $result->rewind();
+
+        /** @var \App\Entity\CreditorWatch $creditorWatch */
+        $creditorWatch = $result->current();
+
+        $this->assertEquals('CreditorWatch', $creditorWatch->getValue());
+
+        $result->next();
+
+         /** @var \App\Entity\CreditorWatch $creditorWatch */
+         $creditorWatch = $result->current();
+
+        $this->assertEquals('creditor watch', $creditorWatch->getValue());
     }
 }
