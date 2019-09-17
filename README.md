@@ -62,6 +62,7 @@ Type any keywords, such as 'CreditorWatch' or 'creditor watch' and click submit.
 
 #### The \App\Base\Request & \App\Base\Response doesn't comply PSR7 standard.
 #### Controller ideally should allow annotation to match request.
+#### MVC structure needs to improve so they can decouple to each other.
 #### Chunk or buffer the downloaded html so the app doesn't limit to 100 results.
 #### Build Log class to do PSR7 compatible logs.
 #### Introduce REST api and do frontend and backend separation.
