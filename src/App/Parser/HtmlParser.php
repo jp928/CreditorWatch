@@ -2,6 +2,8 @@
 
 namespace App\Parser;
 
+use App\Entity\CreditorWatch;
+use App\Entity\CreditorWatchCollection;
 use App\Exceptions\HtmlParseException;
 use DOMDocument;
 use DOMXPath;
@@ -18,9 +20,9 @@ class HtmlParser implements HtmlParserInterface
      * @return string[]
      * @throws \App\Exceptions\HtmlParseException
      */
-    public function parse(string $html): array
+    public function parse(string $html): CreditorWatchCollection
     {
-        $result = [];
+        $result = new CreditorWatchCollection();
 
         try {
             $dom = new DOMDocument();
@@ -34,7 +36,11 @@ class HtmlParser implements HtmlParserInterface
                     continue;
                 }
 
-                $result[$key] = $node->nodeValue;
+                $creditorWatch = (new CreditorWatch())
+                    ->setKey((string) $key)
+                    ->setValue($node->nodeValue);
+
+                $result->push($creditorWatch);
             }
         } catch (Exception $e) {
             throw new HtmlParseException();

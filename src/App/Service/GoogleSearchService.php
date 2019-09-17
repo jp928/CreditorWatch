@@ -1,7 +1,9 @@
 <?php declare (strict_types = 1);
 
-namespace App\Parser;
+namespace App\Service;
 
+use App\Entity\CreditorWatchCollection;
+use App\Parser\HtmlParserInterface;
 use App\Transport\DownloaderInterface;
 use DateTime;
 use Webmozart\Assert\Assert;
@@ -9,7 +11,7 @@ use function file_get_contents;
 use function is_array;
 use function preg_match;
 
-class Dom
+class GoogleSearchService
 {
 
     const CACHE_DIR = __DIR__ . '/../../../cache';
@@ -23,7 +25,7 @@ class Dom
     /** @var string */
     private $content;
 
-    public function __construct(DownloaderInterface $downloader, HTMLParserInterface $parser)
+    public function __construct(DownloaderInterface $downloader, HtmlParserInterface $parser)
     {
         Assert::isInstanceOf($downloader, '\App\Transport\DownloaderInterface', 'Downloader is not right.');
         Assert::isInstanceOf($parser, '\App\Parser\HtmlParserInterface', 'Parser is not right.');
@@ -32,25 +34,27 @@ class Dom
         $this->parser = $parser;
     }
 
-    public function load(string $url): void
+    public function load(string $url): self
     {
         $content = $this->getContent($url);
         $this->content = $this->sanitizer($content);
+
+        return $this;
     }
 
     /**
-     * Parse Dom
+     * Parse GoogleSearchService
      *
      * @param string $htmlString
      * @return string[]
      */
-    public function parse(): array
+    public function parse(): CreditorWatchCollection
     {
         return $this->parser->parse($this->content);
     }
 
     /**
-     * Sanitize the dom by removing useless elements
+     * Sanitize the GoogleSearchService by removing useless elements
      *
      * @param string $html
      */
@@ -119,7 +123,7 @@ class Dom
      */
     protected function getContentFromCache(): ?string
     {
-        $cacheDir = DOM::CACHE_DIR;
+        $cacheDir = GoogleSearchService::CACHE_DIR;
 
         $files = scandir($cacheDir);
 
@@ -156,7 +160,7 @@ class Dom
         
         $expireOn->modify('+10 hours');
 
-        $cacheFile = DOM::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
+        $cacheFile = GoogleSearchService::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
 
         file_put_contents($cacheFile, $content);
     }

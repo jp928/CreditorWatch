@@ -2,81 +2,51 @@
 
 namespace App\Base;
 
-use App\Parser\Dom;
-use App\Parser\HtmlParser;
-use App\Transport\Downloader;
-use Webmozart\Assert\Assert;
-use function file_get_contents;
+use App\Container\Container;
+use App\Controller\GoogleSearchController;
 
 class App
 {
 
-    /** @var string $keyword */
-    private $keyword;
-
-    /** @var string $url */
-    private $url;
+    /** @var string[] $definition */
+    private $definition = [];
     
-    public function __construct(string $keyword)
-    {
-        Assert::stringNotEmpty($keyword, 'Please set keyword in setting.php.');
-
-        $this->keyword = $keyword;
-
-        $this->setUrl($keyword);
-    }
-
-    public function process(): void
-    {
-        $dom = $this->domFactory();
-
-        $dom->load($this->url);
-
-        echo $this->render($dom->parse());
-    }
-
     /**
-     * Render the result into HTML
-     *
-     * @param string[] $result
-     * @return string HTMl
+     * @param string[] $definition Dedependcies definition
      */
-    protected function render(array $result): string
+    public function __construct(array $definition)
     {
-        $template = file_get_contents(__DIR__ . '/../View/result.tpl');
+        $this->definition = $definition;
 
-        $keyword = $this->keyword;
+        $this->router = new Router();
 
-        array_walk($result, function ($value, $key) use (&$content): void {
-            $content .= '<li>' . $key . '&nbsp;<b>' . $value . '</b></li>';
-        });
+        $googleSearchController = Container::getInstance()->setDefinition($definition)->resolve(GoogleSearchController::class);
 
-        $template = str_replace(['%keyword%', '%content%'], compact('keyword', 'content'), $template);
-
-        return $template;
+        $this->registerRoute($googleSearchController);
+    }
+    
+    protected function configureContainer(ContainerInterface $container): void
+    {
+        $container->wire($this->definition);
     }
 
-    /**
-     * Generate Dom Object
-     *
-     * @return /App/Parser/Dom
-     */
-    protected function domFactory(): Dom
+    public function run(): void
     {
-        $downloader = new Downloader();
+        try {
+            $request = $_POST;
+            // var_dump($_POST);
+            // $request = $this->request->parse();
+            $response = $this->process($request, $response);
+        } catch (InvalidMethodException $e) {
+            // $response = $this->processInvalidMethod($e->getRequest(), $response);
+        } finally {
+        }
 
-        $parser = new HtmlParser();
-
-        return new Dom($downloader, $parser);
+        $this->render($response);
     }
 
-    /**
-     * Setter of $keyword
-     *
-     * @param string $keyword
-     */
-    private function setUrl(string $keyword): void
+    protected function render(ResponseInterface $response): void
     {
-        $this->url = 'http://www.google.com/search?q=' . rawurlencode($keyword) . '&start=0&num=100';
+        echo $response;
     }
 }

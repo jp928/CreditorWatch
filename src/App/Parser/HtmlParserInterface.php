@@ -2,6 +2,8 @@
 
 namespace App\Parser;
 
+use App\Entity\CreditorWatchCollection;
+
 /**
  * Interface HtmlParserInterface
  *
@@ -16,5 +18,5 @@ interface HtmlParserInterface
      *
      * @return string[]
      */
-    public function parse(string $html): array;
+    public function parse(string $html): CreditorWatchCollection;
 }

@@ -5,8 +5,8 @@ namespace App\Transport;
 /**
  * Interface DownloaderInterface
  *
- * @package App\Parser
- * @throws \App\Parser\App\Exceptions\DownloadException
+ * @package App\Transport
+ * @throws \App\Exceptions\DownloadException
  */
 interface DownloaderInterface
 {
