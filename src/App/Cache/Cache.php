@@ -9,7 +9,7 @@ use function unserialize;
 class Cache
 {
 
-    /** @var \App\Cache\CacheInterface $cacheEngine */
+    /** @var \App\Cache\CacheEngineInterface $cacheEngine */
     private $cacheEngine;
   
     public function __construct(CacheEngineInterface $cacheEngine)
