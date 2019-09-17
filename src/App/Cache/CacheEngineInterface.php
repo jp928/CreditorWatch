@@ -15,7 +15,7 @@ interface CacheEngineInterface
      *
      * @return void
      */
-    public function obtain(string $key);
+    public function obtain(string $key): void;
 
     /**
      * Persist result to cache

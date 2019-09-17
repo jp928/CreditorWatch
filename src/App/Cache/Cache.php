@@ -15,6 +15,6 @@ class Cache implements CacheInterface
 
     public function obtain(): void
     {
-      $cacheEngine->obtain();
+        $cacheEngine->obtain();
     }
 }
