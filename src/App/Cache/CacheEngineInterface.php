@@ -13,7 +13,7 @@ interface CacheEngineInterface
     /**
      * Obtain result from cache
      *
-     * @return mixed
+     * @return void
      */
     public function obtain(string $key);
 

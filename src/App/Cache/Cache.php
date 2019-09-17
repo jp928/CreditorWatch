@@ -13,7 +13,8 @@ class Cache implements CacheInterface
         $this->cacheEngine = $cacheEngine;
     }
 
-    public function __call(): void
+    public function obtain(): void
     {
+      $cacheEngine->obtain();
     }
 }
