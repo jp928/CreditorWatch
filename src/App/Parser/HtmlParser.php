@@ -2,7 +2,7 @@
 
 namespace App\Parser;
 
-use \App\Exceptions\HtmlParseException;
+use App\Exceptions\HtmlParseException;
 use DOMDocument;
 use DOMXPath;
 use Exception;
@@ -19,8 +19,9 @@ class HtmlParser implements HtmlParserInterface
      * @throws \App\Exceptions\HtmlParseException
      */
     public function parse(string $html): array
-    {        
+    {
         $result = [];
+
         try {
             $dom = new DOMDocument();
             @$dom->loadHTML($html);
@@ -35,9 +36,7 @@ class HtmlParser implements HtmlParserInterface
 
                 $result[$key] = $node->nodeValue;
             }
-
         } catch (Exception $e) {
-            
             throw new HtmlParseException();
         }
 

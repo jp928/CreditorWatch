@@ -4,7 +4,8 @@ namespace App\Cache;
 
 class Cache implements CacheInterface
 {
-    /** @var CacheInterface $cacheEngine */
+
+    /** @var \App\Cache\CacheInterface $cacheEngine */
     private $cacheEngine;
   
     public function __construct(CacheEngineInterface $cacheEngine)
@@ -12,7 +13,7 @@ class Cache implements CacheInterface
         $this->cacheEngine = $cacheEngine;
     }
 
-    public function __call() {
-      
+    public function __call(): void
+    {
     }
 }

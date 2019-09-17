@@ -11,7 +11,7 @@ interface CacheEngineInterface
 {
 
     /**
-     * Obtain result from cache 
+     * Obtain result from cache
      *
      * @return mixed
      */
@@ -19,9 +19,8 @@ interface CacheEngineInterface
 
     /**
      * Persist result to cache
-     * 
+     *
      * @return bool
      */
     public function persist(): bool;
-
 }
