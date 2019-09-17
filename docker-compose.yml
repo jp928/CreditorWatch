@@ -10,6 +10,9 @@ services:
         - "9000:9000"
       volumes:
         - ./:/var/www/html
+        - ./php/docker-php-ext-redis.ini:/usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+      links:
+        - redis
 
     server:
       build:
@@ -26,3 +29,11 @@ services:
         - "80:8180"
       links:
         - php
+
+    redis:
+      build:
+        context: ./docker/redis
+        dockerfile: Dockerfile
+      container_name: REDIS
+      ports:
+        - "6379:6379"

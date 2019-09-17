@@ -4,8 +4,8 @@ RUN apk add --no-cache \
 
 RUN apk add --no-cache --update icu-libs icu icu-dev libxml2-dev libpng-dev git
 RUN docker-php-ext-install gd intl mbstring simplexml
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+RUN pecl install xdebug redis
+RUN docker-php-ext-enable xdebug redis
 
 RUN	apk update && \
 	apk upgrade && \
