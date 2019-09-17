@@ -20,6 +20,5 @@ try {
     // Process logic
     $app->run();
 } catch (Exception $e) {
-    var_dump($e);
-    // Log execption
+    // @ToDo Log exception
 }
