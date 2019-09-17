@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace App\Parser;
+namespace App\Transport;
 
 use App\Exceptions\DownloadException;
 use function curl_error;

@@ -3,8 +3,8 @@
 namespace App\Base;
 
 use App\Parser\Dom;
-use App\Parser\Downloader;
 use App\Parser\HtmlParser;
+use App\Transport\Downloader;
 use Webmozart\Assert\Assert;
 use function file_get_contents;
 

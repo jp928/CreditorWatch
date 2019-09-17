@@ -2,6 +2,7 @@
 
 namespace App\Parser;
 
+use App\Transport\DownloaderInterface;
 use DateTime;
 use Webmozart\Assert\Assert;
 use function file_get_contents;
@@ -13,7 +14,7 @@ class Dom
 
     const CACHE_DIR = __DIR__ . '/../../../cache';
     
-    /** @var \App\Parser\DownloaderInterface */
+    /** @var \App\Transport\DownloaderInterface */
     private $downloader;
 
     /** @var \App\Parser\HtmlParserInterface */
@@ -24,7 +25,7 @@ class Dom
 
     public function __construct(DownloaderInterface $downloader, HTMLParserInterface $parser)
     {
-        Assert::isInstanceOf($downloader, '\App\Parser\DownloaderInterface', 'Downloader is not right.');
+        Assert::isInstanceOf($downloader, '\App\Transport\DownloaderInterface', 'Downloader is not right.');
         Assert::isInstanceOf($parser, '\App\Parser\HtmlParserInterface', 'Parser is not right.');
 
         $this->downloader = $downloader;

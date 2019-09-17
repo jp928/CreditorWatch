@@ -6,7 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $settings = require_once __DIR__ . '/settings.php';
 
-$redis = new \Redis();
+$redis = new Redis();
 
 $redis->connect('redis', 6379);
 

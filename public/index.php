@@ -17,6 +17,6 @@ try {
 
     // Process logic
     $app->process();
-} catch (\Exception $e) {
+} catch (Exception $e) {
     die('Error occur: ' . $e->getMessage());
 }

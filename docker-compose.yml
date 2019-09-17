@@ -10,7 +10,7 @@ services:
         - "9000:9000"
       volumes:
         - ./:/var/www/html
-        - ./php/docker-php-ext-redis.ini:/usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+        - ./docker/php/docker-php-ext-redis.ini:/usr/local/etc/php/conf.d/docker-php-ext-redis.ini
       links:
         - redis
 
