@@ -31,14 +31,14 @@ composer run cs
 ```
 
 ### Basic Structure
-
+```bash
   ├── docker                  # docker files
   ├── public                  # App entry point
   ├── src                     # Source files
   └── test                    # Automated tests
-
+```
   src diretory structure
-
+```bash
   ├── App                   
   │   ├── Base                # Contains Router, Request and Reponse
   │   ├── Cache               # Cache Logic
@@ -53,6 +53,7 @@ composer run cs
   │   └── View                # Render entities
   ├── definition.php          # Definition of dependency injection   
   └── bootstrap.php           # Initiate App
+```
 
 ### How to use
 Type any keywords, such as 'CreditorWatch' or 'creditor watch' and click submit. The index of the keyword will show as [1, 3, 4, xxx]. The following list shows the exact matching keyword and index from google search result.
