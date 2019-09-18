@@ -40,7 +40,7 @@ class GoogleSearchController extends AbstractController
 
         /** @var \App\Entity\CreditorWatchCollection $collection */
         $collection = $this->service->load($keyword)->parse();
-        print_r($collection);die();
+
         return (new View())->render($collection);
     }
 
