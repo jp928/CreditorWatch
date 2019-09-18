@@ -11,47 +11,35 @@ use PHPUnit\Framework\TestCase;
 class AppTest extends TestCase
 {
 
-    /** @var \App\Container\ContainerInterface $mockedContainer */
-    private $mockedContainer;
-
-    protected function tearDown(): void
-    {
-        unset($this->mockedContainer);
-        unset($this->app);
-        parent::tearDown();
-    }
-
     public function testProcess(): void
     {
         $mockedRouter = $this->getMockBuilder(Router::class)
           ->setMethods(['bindContainer', 'dispatch', 'registerControllers'])
           ->getMock();
 
-
         $mockedRequest = $this->getMockBuilder(Request::class)
           ->setMethods(['parseRequest'])
           ->getMock();
 
-        $this->mockedContainer = $this->createMock(ContainerInterface::class);
+        $mockedContainer = $this->createMock(ContainerInterface::class);
 
-        $this->mockedContainer->expects($this->at(0))
+        $mockedContainer->expects($this->at(0))
           ->method('resolve')
           ->with(Router::class)
           ->willReturn($mockedRouter);
 
-        $this->mockedContainer->expects($this->at(1))
+        $mockedContainer->expects($this->at(1))
           ->method('resolve')
           ->with(Request::class)
           ->willReturn($mockedRequest);
         
-                
         $mockedRouter->expects($this->once())
           ->method('bindContainer')
-          ->with($this->mockedContainer)
+          ->with($mockedContainer)
           ->willReturn($mockedRouter);
 
-        $this->app = $this->getMockBuilder(App::class)
-          ->setConstructorArgs([$this->mockedContainer])
+        $app = $this->getMockBuilder(App::class)
+          ->setConstructorArgs([$mockedContainer])
           ->setMethods()
           ->getMock();
                 
@@ -59,6 +47,6 @@ class AppTest extends TestCase
           ->method('dispatch')
           ->with($this->anything());
 
-        $this->app->run();
+        $app->run();
     }
 }
