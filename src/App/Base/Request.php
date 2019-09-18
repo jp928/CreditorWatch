@@ -45,11 +45,11 @@ class Request implements RequestInterface
 
     /**
      * Get data from $_REQUEST
-     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @param string|null $key
-     * @return void
+     * @return mixed|null
      */
-    public function getData(?string $key = null): void
+    public function getData(?string $key = null)
     {
         if (is_null($key)) {
             return $this->data;

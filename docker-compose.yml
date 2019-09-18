@@ -31,9 +31,7 @@ services:
         - php
 
     redis:
-      build:
-        context: ./docker/redis
-        dockerfile: Dockerfile
+      image: redis:5-alpine
       container_name: REDIS
       ports:
         - "6379:6379"
