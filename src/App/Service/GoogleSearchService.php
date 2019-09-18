@@ -56,7 +56,7 @@ class GoogleSearchService
     public function parse(): CreditorWatchCollection
     {
         $collection = $this->cache->obtain($this->keyword);
-        var_dump($collection);die();
+
         if (is_null($collection)) {
             $collection = $this->parser->parse($this->content);
             $this->cache->persist($this->keyword, $collection);

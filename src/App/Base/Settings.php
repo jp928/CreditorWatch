@@ -30,12 +30,12 @@ class Settings implements ArrayAccess
     /**
      * Assigns a value to the specified offset
      * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-     * @param string $offset The offset to assign the value to
+     * @param mixed $offset The offset to assign the value to
      * @param mixed $value The value to set
      * @access public
      * @abstracting ArrayAccess
      */
-    public function offsetSet(string $offset, $value): void
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->settings[] = $value;
@@ -46,25 +46,25 @@ class Settings implements ArrayAccess
 
   /**
    * Whether or not an offset exists
-   *
-   * @param string $offset An offset to check for
+   * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+   * @param mixed $offset An offset to check for
    * @access public
    * @return bool
    * @abstracting ArrayAccess
    */
-    public function offsetExists(string $offset): bool
+    public function offsetExists($offset): bool
     {
         return isset($this->settings[$offset]);
     }
 
   /**
    * Unsets an offset
-   *
-   * @param string $offset The offset to unset
+   * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+   * @param mixed $offset The offset to unset
    * @access public
    * @abstracting ArrayAccess
    */
-    public function offsetUnset(string $offset): void
+    public function offsetUnset($offset): void
     {
         if (!$this->offsetExists($offset)) {
             return;
@@ -76,12 +76,12 @@ class Settings implements ArrayAccess
   /**
    * Returns the value at specified offset
    * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-   * @param string The offset to retrieve
+   * @param mixed $offset The offset to retrieve
    * @access public
    * @return mixed
    * @abstracting ArrayAccess
    */
-    public function offsetGet(string $offset)
+    public function offsetGet($offset)
     {
         return $this->offsetExists($offset)
           ? $this->settings[$offset]
