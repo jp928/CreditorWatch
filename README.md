@@ -63,6 +63,10 @@ composer run cs
 * Try to build a trail MVC
 
 
+### CI\CD pipeline
+* This repo is supported by Travis
+* pre-commit and pre-push would force developer to comply code standard
+
 ### How to use
 
 Type any keywords, such as 'CreditorWatch' or 'creditor watch' and click submit. The index of the keyword will show as [1, 3, 4, xxx]. The following list shows the exact matching keyword and index from google search result.
