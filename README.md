@@ -72,7 +72,7 @@ composer run cs
 Type any keywords, such as 'CreditorWatch' or 'creditor watch' and click submit. The index of the keyword will show as [1, 3, 4, xxx]. The following list shows the exact matching keyword and index from google search result.
 
 ### To do list in production
-
+* Render html in controller is not ideal, should build a middleware mechanism to render template. 
 * The \App\Base\Request & \App\Base\Response doesn't comply PSR7 standard.
 * \App\Exception\BadRequestException should return http status code 401 or 400
 * \App\Exception\PageNotFoundException should return http status code 404
