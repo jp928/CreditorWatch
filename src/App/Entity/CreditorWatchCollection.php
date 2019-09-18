@@ -41,9 +41,7 @@ class CreditorWatchCollection implements Iterator, Serializable
 
     public function valid(): bool
     {
-        $item = $this->collection[$this->position];
-
-        return isset($item) && ($item instanceof CreditorWatch);
+        return isset($this->collection[$this->position]) && ($item instanceof CreditorWatch);
     }
 
     public function push(CreditorWatch $creditorWatch): void
