@@ -15,13 +15,9 @@ class GoogleSearchController extends AbstractController
     /** @var \App\Service\GoogleSearchService $service */
     private $service;
 
-    /** @var \App\Cache\Cache $cache */
-    private $cache;
-
-    public function __construct(GoogleSearchService $googleSearchService, Cache $cache)
+    public function __construct(GoogleSearchService $googleSearchService)
     {
         $this->service = $googleSearchService;
-        $this->cache = $cache;
     }
 
     public function getRouterPath(): string
@@ -43,17 +39,8 @@ class GoogleSearchController extends AbstractController
             throw new BadRequestException();
         }
 
-        $keyword = rawurlencode($keyword);
-
-        $collection = $this->cache->obtain($keyword);
-
-        if (is_null($collection)) {
-            $url = 'http://www.google.com/search?q=' . $keyword  . '&start=0&num=100';
-            /** @var \App\Entity\CreditorWatchCollection $collection */
-            $collection = $this->service->load($url)->parse();
-
-            $this->cache->persist($keyword, $collection);
-        }
+        /** @var \App\Entity\CreditorWatchCollection $collection */
+        $collection = $this->service->load($keyword)->parse();
 
         return (new View())->render($collection);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Cache\Cache;
 use App\Entity\CreditorWatchCollection;
 use App\Parser\HtmlParserInterface;
 use App\Transport\DownloaderInterface;
@@ -9,29 +10,36 @@ use Webmozart\Assert\Assert;
 
 class GoogleSearchService
 {
-
-    const CACHE_DIR = __DIR__ . '/../../../cache';
-    
-    /** @var \App\Transport\DownloaderInterface */
+    /** @var \App\Transport\DownloaderInterface $downloader */
     private $downloader;
 
-    /** @var \App\Parser\HtmlParserInterface */
+    /** @var \App\Parser\HtmlParserInterface $parser */
     private $parser;
 
-    /** @var string */
+    /** @var string $content */
     private $content;
 
-    public function __construct(DownloaderInterface $downloader, HtmlParserInterface $parser)
+    /** @var string $keyword */
+    private $keyword;
+
+    /** @var \App\Cache\Cache $cache */
+    private $cache;
+
+    public function __construct(DownloaderInterface $downloader, HtmlParserInterface $parser, Cache $cache)
     {
         Assert::isInstanceOf($downloader, '\App\Transport\DownloaderInterface', 'Downloader is not right.');
         Assert::isInstanceOf($parser, '\App\Parser\HtmlParserInterface', 'Parser is not right.');
+        Assert::isInstanceOf($cache, '\App\Cache\Cache', 'Cache is not right.');
 
         $this->downloader = $downloader;
         $this->parser = $parser;
+        $this->cache = $cache;
     }
 
-    public function load(string $url): self
+    public function load(string $keyword): self
     {
+        $this->setKeyword($keyword);
+        $url = $this->getUrl();
         $content = $this->getContent($url);
         $this->content = $this->sanitizer($content);
 
@@ -46,7 +54,14 @@ class GoogleSearchService
      */
     public function parse(): CreditorWatchCollection
     {
-        return $this->parser->parse($this->content);
+        $collection = $this->cache->obtain($this->keyword);
+
+        if (is_null($collection)) {
+            $collection = $this->parser->parse($this->content);
+            $this->cache->persist($this->keyword, $collection);
+        }
+
+        return $collection;
     }
 
     /**
@@ -104,51 +119,20 @@ class GoogleSearchService
     }
 
     /**
-     * Get content from cache
-     *
-     * @codeCoverageIgnore
+     * Setter for keyword
      */
-    // protected function getContentFromCache(): ?string
-    // {
-    //     $cacheDir = GoogleSearchService::CACHE_DIR;
-
-    //     $files = scandir($cacheDir);
-
-    //     if (is_array($files)) {
-    //         $cacheFile = array_filter($files, function ($file) {
-    //             return preg_match("/result_.*[0-9].*.html/", $file) > 0;
-    //         });
-
-    //         if (count($cacheFile) === 0) {
-    //             return null;
-    //         }
-
-    //         $cacheFileName = reset($cacheFile);
-    //         $expiredAfter = (new DateTime())->setTimestamp((int) substr($cacheFileName, 7, -5));
-    //         $now = new DateTime();
-
-    //         if ($now <= $expiredAfter) {
-    //             return file_get_contents($cacheDir . DIRECTORY_SEPARATOR . $cacheFileName);
-    //         }
-    //     }
-
-    //     return null;
-    // }
+    private function setKeyword(string $keyword): void
+    {
+        $this->keyword = rawurlencode($keyword);
+    }
 
     /**
-     * Persist content into a local file
+     * Generate google search url
      *
-     * @codeCoverageIgnore
-     * @param string html
+     * @return string
      */
-    // protected function persistCache(string $content): void
-    // {
-    //     $expireOn = new DateTime();
-        
-    //     $expireOn->modify('+10 hours');
-
-    //     $cacheFile = GoogleSearchService::CACHE_DIR . '/result_ ' . $expireOn->getTimestamp() . '.html';
-
-    //     file_put_contents($cacheFile, $content);
-    // }
+    private function getUrl(): string
+    {
+        return sprintf('http://www.google.com/search?q=%s&start=0&num=100', $this->keyword);
+    }
 }

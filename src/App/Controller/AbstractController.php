@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Base\Request;
 use App\Base\Response;
+use App\Exception\PageNotFoundException;
 use function call_user_func;
 
 abstract class AbstractController
@@ -11,28 +12,60 @@ abstract class AbstractController
 
     abstract public function getRouterPath(): string;
 
+    /**
+     * Handler for HTTP POST method
+     * Throw exception if the controller doesn't override it.
+     *
+     * @throws \App\Exceptions\PageNotFoundException
+     * @param Request $request
+     * @return Response|null
+     */
     public function post(Request $request): ?Response
     {
-        return null;
+        throw new PageNotFoundException();
     }
 
+    /**
+     * Handler for HTTP GET method
+     * Throw exception if the controller doesn't override it.
+     *
+     * @throws App\Exceptions\PageNotFoundException
+     * @return Response|null
+     */
     public function get(): ?Response
     {
-        return null;
+        throw new PageNotFoundException();
     }
 
+    /**
+     * Handler for HTTP PUT method
+     * Throw exception if the controller doesn't override it.
+     *
+     * @throws App\Exceptions\PageNotFoundException
+     * @param Request $request
+     * @return Response|null
+     */
     public function put(Request $request): ?Response
     {
-        return null;
+        throw new PageNotFoundException();
     }
 
+    /**
+     * Handler for HTTP DELETE method
+     * Throw exception if the controller doesn't override it.
+     *
+     * @throws App\Exceptions\PageNotFoundException
+     * @param Request $request
+     * @return Response|null
+     */
     public function delete(Request $request): ?Response
     {
-        return null;
+        throw new PageNotFoundException();
     }
 
     /**
      * Invoke the controller
+     * This logic would be shared with multiple controlers
      *
      * @param \App\Base\Request $request
      * @return \App\Base\Response
@@ -45,6 +78,7 @@ abstract class AbstractController
             return call_user_func([$this, $httpMethod], $request);
         }
         
+        // For PATCH, OPTIONS etc raise exception for now.
         throw new ControllerDoesNotSupportHttpRequestException($httpMethod);
     }
 }

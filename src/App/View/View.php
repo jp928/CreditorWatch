@@ -28,7 +28,7 @@ class View
         }
 
         if (count($this->indices) > 0) {
-            $keyword = implode(', ', $this->indices);
+            $keyword = htmlspecialchars(implode(', ', $this->indices));
         }
 
         $html = str_replace(
