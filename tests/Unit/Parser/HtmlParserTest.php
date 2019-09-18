@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Parser;
 
-use App\Entity\CreditorWatch;
 use App\Parser\HtmlParser;
 use PHPUnit\Framework\TestCase;
 

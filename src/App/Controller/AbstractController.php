@@ -17,8 +17,8 @@ abstract class AbstractController
      * Throw exception if the controller doesn't override it.
      *
      * @throws \App\Exceptions\PageNotFoundException
-     * @param Request $request
-     * @return Response|null
+     * @param \App\Base\Request $request
+     * @return \App\Base\Response|null
      */
     public function post(Request $request): ?Response
     {
@@ -29,8 +29,8 @@ abstract class AbstractController
      * Handler for HTTP GET method
      * Throw exception if the controller doesn't override it.
      *
-     * @throws App\Exceptions\PageNotFoundException
-     * @return Response|null
+     * @throws \App\Controller\App\Exceptions\PageNotFoundException
+     * @return \App\Base\Response|null
      */
     public function get(): ?Response
     {
@@ -41,9 +41,9 @@ abstract class AbstractController
      * Handler for HTTP PUT method
      * Throw exception if the controller doesn't override it.
      *
-     * @throws App\Exceptions\PageNotFoundException
-     * @param Request $request
-     * @return Response|null
+     * @throws \App\Controller\App\Exceptions\PageNotFoundException
+     * @param \App\Base\Request $request
+     * @return \App\Base\Response|null
      */
     public function put(Request $request): ?Response
     {
@@ -54,9 +54,9 @@ abstract class AbstractController
      * Handler for HTTP DELETE method
      * Throw exception if the controller doesn't override it.
      *
-     * @throws App\Exceptions\PageNotFoundException
-     * @param Request $request
-     * @return Response|null
+     * @throws \App\Controller\App\Exceptions\PageNotFoundException
+     * @param \App\Base\Request $request
+     * @return \App\Base\Response|null
      */
     public function delete(Request $request): ?Response
     {

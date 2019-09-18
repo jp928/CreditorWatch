@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Base\Request;
 use App\Base\Response;
-use App\Cache\Cache;
 use App\Exceptions\BadRequestException;
 use App\Service\GoogleSearchService;
 use App\View\View;
@@ -35,7 +34,7 @@ class GoogleSearchController extends AbstractController
     {
         $keyword = $request->getData('keyword');
 
-        if (empty($keyword)) {
+        if (is_null($keyword)) {
             throw new BadRequestException();
         }
 

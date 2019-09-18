@@ -13,10 +13,10 @@ class Request implements RequestInterface
     /** @var string $httpMethod */
     private $httpMethod;
 
-    /** @string $uriPath */
+    /** @var string $uriPath */
     private $uriPath;
 
-    /** @string[] $data */
+    /** @var string[] $data */
     private $data = [];
 
     /**
@@ -43,13 +43,19 @@ class Request implements RequestInterface
         return $this->uriPath;
     }
 
-    public function getData(?string $key = null)
+    /**
+     * Get data from $_REQUEST
+     *
+     * @param string|null $key
+     * @return void
+     */
+    public function getData(?string $key = null): void
     {
         if (is_null($key)) {
             return $this->data;
         }
 
-        return $this->data[$key];
+        return $this->data[$key] ?? null;
     }
 
     private function parseHttpMethod(): void

@@ -8,6 +8,7 @@ use ReflectionClass;
 
 class ResponseTest extends TestCase
 {
+
     public function testSetGetBody(): void
     {
         $class = new ReflectionClass(Response::class);

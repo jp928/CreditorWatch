@@ -9,6 +9,7 @@ use function serialize;
 
 class CacheTest extends TestCase
 {
+
     public function testObtain(): void
     {
         $mockedCacheEngine = $this->createMock(CacheEngineInterface::class);

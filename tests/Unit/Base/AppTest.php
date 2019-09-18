@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
 {
+
     /** @var \App\Container\ContainerInterface $mockedContainer */
     private $mockedContainer;
 
@@ -47,7 +48,7 @@ class AppTest extends TestCase
         $mockedRouter->expects($this->once())
           ->method('bindContainer')
           ->with($this->mockedContainer)
-          ->willReturn($mockedRouter);  
+          ->willReturn($mockedRouter);
 
         $this->app = $this->getMockBuilder(App::class)
           ->setConstructorArgs([$this->mockedContainer])

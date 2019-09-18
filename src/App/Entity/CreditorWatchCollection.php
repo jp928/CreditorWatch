@@ -62,7 +62,13 @@ class CreditorWatchCollection implements Iterator, Serializable
     {
         return serialize($this->collection);
     }
-   
+    
+    /**
+     * Unserialize
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param mixed $data
+     * @return void
+     */
     public function unserialize($data): void
     {
         $this->collection = unserialize($data);

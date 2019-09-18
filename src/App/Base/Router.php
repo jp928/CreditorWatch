@@ -12,6 +12,7 @@ class Router
     /** @var string[] $repository */
     private $repository = [];
 
+    /** @var \App\Container\ContainerInterface $container */
     private $container;
 
     const CONTROLLER_NS = '\App\Controller\\';

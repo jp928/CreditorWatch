@@ -4,10 +4,10 @@ namespace Tests\Unit\Base;
 
 use App\Base\Settings;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 class SettingsTest extends TestCase
 {
+
     public function testSetGetBody(): void
     {
         $settings = new Settings();
@@ -15,7 +15,7 @@ class SettingsTest extends TestCase
         $this->assertEquals([
           'expire' => 36000,
           'prefix' => 'CreditorWatch',
-          'host' => 'redis'
+          'host' => 'redis',
         ], $settings['redis']);
     }
 }

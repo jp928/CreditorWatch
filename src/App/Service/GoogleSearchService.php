@@ -10,6 +10,7 @@ use Webmozart\Assert\Assert;
 
 class GoogleSearchService
 {
+
     /** @var \App\Transport\DownloaderInterface $downloader */
     private $downloader;
 

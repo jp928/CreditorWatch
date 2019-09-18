@@ -16,20 +16,26 @@ class Settings implements ArrayAccess
       ],
     ];
 
+    /**
+     * Magic function to get property value
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param mixed $key
+     * @return mixed
+     */
     public function &__get($key)
     {
         return $this->settings[$key];
     }
 
-        /**
+    /**
      * Assigns a value to the specified offset
-     *
-     * @param string The offset to assign the value to
-     * @param mixed  The value to set
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @param string $offset The offset to assign the value to
+     * @param mixed $value The value to set
      * @access public
      * @abstracting ArrayAccess
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(string $offset, $value): void
     {
         if (is_null($offset)) {
             $this->settings[] = $value;
@@ -41,12 +47,12 @@ class Settings implements ArrayAccess
   /**
    * Whether or not an offset exists
    *
-   * @param string An offset to check for
+   * @param string $offset An offset to check for
    * @access public
    * @return bool
    * @abstracting ArrayAccess
    */
-    public function offsetExists($offset): bool
+    public function offsetExists(string $offset): bool
     {
         return isset($this->settings[$offset]);
     }
@@ -54,11 +60,11 @@ class Settings implements ArrayAccess
   /**
    * Unsets an offset
    *
-   * @param string The offset to unset
+   * @param string $offset The offset to unset
    * @access public
    * @abstracting ArrayAccess
    */
-    public function offsetUnset($offset): void
+    public function offsetUnset(string $offset): void
     {
         if (!$this->offsetExists($offset)) {
             return;
@@ -69,13 +75,13 @@ class Settings implements ArrayAccess
 
   /**
    * Returns the value at specified offset
-   *
+   * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
    * @param string The offset to retrieve
    * @access public
    * @return mixed
    * @abstracting ArrayAccess
    */
-    public function offsetGet($offset)
+    public function offsetGet(string $offset)
     {
         return $this->offsetExists($offset)
           ? $this->settings[$offset]
